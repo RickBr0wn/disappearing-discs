@@ -11,7 +11,7 @@ import GameplayKit
 // MARK: ZPostion
 struct ZPosition {
   static let background: CGFloat = 0.0
-  static let blank: CGFloat = 1.0
+  static let label: CGFloat = 1.0
   static let disc: CGFloat = 2.0
   static let blank_2: CGFloat = 3.0
   static let blank_3: CGFloat = 4.0
@@ -20,10 +20,15 @@ struct ZPosition {
 // MARK: Name
 struct Name {
   static let disc: String = "discObject"
+  static let blank: String = ""
 }
 
 class GameScene: SKScene {
-  // MARK: gameArea
+  // MARK: global variables
+  var scoreNumber: Int = 0
+  var scoreLabel = SKLabelNode(fontNamed: "Pusab")
+  let playCorrectSoundEffect = SKAction.playSoundFileNamed("Correct.wav", waitForCompletion: false)
+  let playClickSoundEffect = SKAction.playSoundFileNamed("Click.wav", waitForCompletion: false)
   let gameArea: CGRect
   
   override init(size: CGSize) {
@@ -47,6 +52,7 @@ class GameScene: SKScene {
     random() * (max - min) + min
   }
   
+  // MARK: didMove(to view: )
   override func didMove(to view: SKView) {
     // MARK: background
     let background = SKSpriteNode(imageNamed: "DiscsBackground")
@@ -62,6 +68,13 @@ class GameScene: SKScene {
     disc.name = Name.disc
     self.addChild(disc)
     
+    // MARK: score
+    scoreLabel.fontSize = 250
+    scoreLabel.text = "0"
+    scoreLabel.fontColor = .white
+    scoreLabel.zPosition = ZPosition.label
+    scoreLabel.position = CGPoint(x: self.size.width / 2, y: self.size.height * 0.85)
+    self.addChild(scoreLabel)
   }
   
   // MARK: spawnNewDisc
@@ -93,12 +106,35 @@ class GameScene: SKScene {
       let positionOfTouch = touch.location(in: self)
       // was an object touched
       let tappedNode = atPoint(positionOfTouch)
-      // what object was touched
+      // get the nodes 'name'
       let nameOfTappedNode = tappedNode.name
-      
+      // conditional on name to check for disc
       if nameOfTappedNode == Name.disc {
-        tappedNode.removeFromParent()
+        // this closure runs when a disc has been touched
+        // set the name to blank, preventing multiple clicks of the same node
+        tappedNode.name = Name.blank
+        // run the remove sequence
+        tappedNode.run(SKAction.sequence([
+          SKAction.fadeOut(withDuration: 0.1),
+          SKAction.removeFromParent()
+        ]))
+        // play the 'correct' sound effect
+        self.run(playCorrectSoundEffectl)
+        // Spawn a new disc
         spawnNewDisc()
+        // increment the score
+        scoreNumber += 1
+        // update the score label
+        scoreLabel.text = "\(scoreNumber)"
+        // Increment number of discs on the screen at any one time, with basic level system
+        if scoreNumber == 10 ||
+            scoreNumber == 50 ||
+            scoreNumber == 125 ||
+            scoreNumber == 200 ||
+            scoreNumber == 300 ||
+            scoreNumber == 500 {
+          spawnNewDisc()
+        }
       }
     }
   }
