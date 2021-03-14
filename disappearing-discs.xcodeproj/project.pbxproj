@@ -15,6 +15,8 @@
 		11A7877D25FE64030073771D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11A7877B25FE64030073771D /* Main.storyboard */; };
 		11A7877F25FE64040073771D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11A7877E25FE64040073771D /* Assets.xcassets */; };
 		11A7878825FE655F0073771D /* Pusab.otf in Resources */ = {isa = PBXBuildFile; fileRef = 11A7878725FE655F0073771D /* Pusab.otf */; };
+		11A7878E25FE680C0073771D /* MainMenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A7878D25FE680C0073771D /* MainMenuScene.swift */; };
+		11A7879525FE68580073771D /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A7879425FE68580073771D /* GameOverScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		11A7877E25FE64040073771D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		11A7878025FE64040073771D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		11A7878725FE655F0073771D /* Pusab.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pusab.otf; sourceTree = "<group>"; };
+		11A7878D25FE680C0073771D /* MainMenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuScene.swift; sourceTree = "<group>"; };
+		11A7879425FE68580073771D /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,8 +66,8 @@
 			children = (
 				11A7877125FE64030073771D /* AppDelegate.swift */,
 				11A7877325FE64030073771D /* GameScene.sks */,
+				11A7879125FE68120073771D /* Scenes */,
 				11A7877525FE64030073771D /* Actions.sks */,
-				11A7877725FE64030073771D /* GameScene.swift */,
 				11A7877925FE64030073771D /* GameViewController.swift */,
 				11A7877B25FE64030073771D /* Main.storyboard */,
 				11A7878725FE655F0073771D /* Pusab.otf */,
@@ -71,6 +75,16 @@
 				11A7878025FE64040073771D /* Info.plist */,
 			);
 			path = "disappearing-discs";
+			sourceTree = "<group>";
+		};
+		11A7879125FE68120073771D /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				11A7877725FE64030073771D /* GameScene.swift */,
+				11A7878D25FE680C0073771D /* MainMenuScene.swift */,
+				11A7879425FE68580073771D /* GameOverScene.swift */,
+			);
+			path = Scenes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,8 +159,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11A7879525FE68580073771D /* GameOverScene.swift in Sources */,
 				11A7877825FE64030073771D /* GameScene.swift in Sources */,
 				11A7877A25FE64030073771D /* GameViewController.swift in Sources */,
+				11A7878E25FE680C0073771D /* MainMenuScene.swift in Sources */,
 				11A7877225FE64030073771D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
