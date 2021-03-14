@@ -23,13 +23,18 @@ struct Name {
   static let blank: String = ""
 }
 
+var scoreNumber: Int = 0
+let customFont = "Pusab"
+var globalSize = CGSize(width: 0, height: 0)
+
 class GameScene: SKScene {
   // MARK: global variables
-  var scoreNumber: Int = 0
-  var scoreLabel = SKLabelNode(fontNamed: "Pusab")
+  var scoreLabel = SKLabelNode(fontNamed: customFont)
   let playCorrectSoundEffect = SKAction.playSoundFileNamed("Correct.wav", waitForCompletion: false)
   let playClickSoundEffect = SKAction.playSoundFileNamed("Click.wav", waitForCompletion: false)
+  let playGameOverSoundEffect = SKAction.playSoundFileNamed("GameOverSound.wav", waitForCompletion: false)
   let gameArea: CGRect
+
   
   override init(size: CGSize) {
     let maxAspectRatio: CGFloat = 16.0 / 9.0
@@ -54,6 +59,8 @@ class GameScene: SKScene {
   
   // MARK: didMove(to view: )
   override func didMove(to view: SKView) {
+    scoreNumber = 0
+    globalSize = self.size
     // MARK: background
     let background = SKSpriteNode(imageNamed: "DiscsBackground")
     background.size = self.size
@@ -97,6 +104,20 @@ class GameScene: SKScene {
     disc.position = CGPoint(x: randomX, y: randomY)
     
     self.addChild(disc)
+    
+    disc.run(SKAction.sequence([
+      SKAction.scale(to: 0, duration: 3),
+      playGameOverSoundEffect,
+      SKAction.run(runGameOver)
+    ]))
+    
+  }
+  
+  func runGameOver() -> Void {
+    let sceneToMoveTo = GameOverScene(size: self.size)
+    sceneToMoveTo.scaleMode = self.scaleMode
+    let sceneTransition = SKTransition.crossFade(withDuration: 0.2)
+    self.view!.presentScene(sceneToMoveTo, transition: sceneTransition)
   }
   
   // MARK: touchesBegan
@@ -113,13 +134,15 @@ class GameScene: SKScene {
         // this closure runs when a disc has been touched
         // set the name to blank, preventing multiple clicks of the same node
         tappedNode.name = Name.blank
+        // remove all actions
+        tappedNode.removeAllActions()
         // run the remove sequence
         tappedNode.run(SKAction.sequence([
           SKAction.fadeOut(withDuration: 0.1),
           SKAction.removeFromParent()
         ]))
         // play the 'correct' sound effect
-        self.run(playCorrectSoundEffectl)
+        self.run(playCorrectSoundEffect)
         // Spawn a new disc
         spawnNewDisc()
         // increment the score
